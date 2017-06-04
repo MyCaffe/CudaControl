@@ -1,0 +1,50 @@
+// CudaControl.idl : IDL source for CudaControl
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (CudaControl.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(04177BC8-4ED8-4F5D-97EA-18C75C1039E1),
+	dual,
+	nonextensible,
+	helpstring("ICudaKernel Interface"),
+	pointer_default(unique)
+]
+interface ICudaKernel : IDispatch{
+	[id(1), helpstring("method Load")] HRESULT Load([in] BSTR bstrCudaDLLName);
+	[id(2), helpstring("method RunFloat")] HRESULT RunFloat([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(float) rgInput, [out,retval] SAFEARRAY(float)* prgOutput);
+	[id(3), helpstring("method RunDouble")] HRESULT RunDouble([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [out,retval] SAFEARRAY(double)* prgOutput);
+	[id(4), helpstring("method QueryString")] HRESULT QueryString([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BSTR)* prgOutput);
+};
+[
+	uuid(DAAB1D4F-6487-47E7-806F-C0FC70A942EC),
+	version(1.0),
+	helpstring("CudaControl 1.0 Type Library")
+]
+library CudaControlLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(56A18428-AD3B-4C58-AC07-84D171953617),
+		helpstring("_ICudaKernelEvents Interface")
+	]
+	dispinterface _ICudaKernelEvents
+	{
+		properties:
+		methods:
+	};
+	[
+		uuid(79CD28C1-C81B-42C4-AAE1-7554A956A203),
+		helpstring("CudaKernel Class")
+	]
+	coclass CudaKernel
+	{
+		[default] interface ICudaKernel;
+		[default, source] dispinterface _ICudaKernelEvents;
+	};
+};

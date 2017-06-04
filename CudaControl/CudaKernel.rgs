@@ -1,0 +1,26 @@
+HKCR
+{
+	CudaControl.CudaKernel.1 = s 'CudaKernel Class'
+	{
+		CLSID = s '{79CD28C1-C81B-42C4-AAE1-7554A956A203}'
+	}
+	CudaControl.CudaKernel = s 'CudaKernel Class'
+	{
+		CLSID = s '{79CD28C1-C81B-42C4-AAE1-7554A956A203}'
+		CurVer = s 'CudaControl.CudaKernel.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {79CD28C1-C81B-42C4-AAE1-7554A956A203} = s 'CudaKernel Class'
+		{
+			ProgID = s 'CudaControl.CudaKernel.1'
+			VersionIndependentProgID = s 'CudaControl.CudaKernel'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			'TypeLib' = s '{DAAB1D4F-6487-47E7-806F-C0FC70A942EC}'
+		}
+	}
+}
