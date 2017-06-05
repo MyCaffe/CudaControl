@@ -242,7 +242,7 @@
     </Link>
     <PostBuildEvent>
       <Command>tlbimp $(TargetPath) /keyfile:$(ProjectDir)CudaControl.pfx /primary /machine:Agnostic /out:$(TargetDir)CudaControlLib.dll
-copy $(TargetDir)CudaControlLib.dll C:\Data\Binaries\SS_Projects\_Debug</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -319,10 +319,7 @@ copy $(TargetDir)CudaControlLib.dll C:\Data\Binaries\SS_Projects\_Debug</Command
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(TargetDir)\$(TargetName).dll C:\data\Binaries\SS_Projects\_Release
-copy $(TargetDir)\$(TargetName).pdb C:\data\Binaries\SS_Projects\_Release
-tlbimp.exe /machine:x64 $(TargetDir)\$(TargetName).dll /keyfile:$(ProjectDir)$(TargetName).pfx /out:$(TargetDir)\$(TargetName)Lib.dll
-copy $(TargetDir)\$(TargetName)Lib.dll C:\data\Binaries\SS_Projects\_Release
+      <Command>tlbimp.exe /machine:x64 $(TargetDir)\$(TargetName).dll /keyfile:$(ProjectDir)$(TargetName).pfx /out:$(TargetDir)\$(TargetName)Lib.dll
 regsvr32 C:\data\Binaries\SS_Projects\_Release\$(TargetName).dll /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
