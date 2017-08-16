@@ -14,6 +14,7 @@
 **/_private/*
 **/_build/*
 **/_nuget/*
+**/_nugetx/*
 **/bin/*
 *.pro.*
 
