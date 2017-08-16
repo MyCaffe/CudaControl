@@ -13,6 +13,7 @@
 # Private Files
 **/_private/*
 **/_build/*
+**/_nuget/*
 **/bin/*
 *.pro.*
 
