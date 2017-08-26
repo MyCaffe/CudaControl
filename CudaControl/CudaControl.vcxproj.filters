@@ -48,7 +48,6 @@
     <None Include="CudaKernel.rgs">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="CudaControl.idl">

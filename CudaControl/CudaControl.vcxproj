@@ -311,7 +311,6 @@ regsvr32 C:\data\Binaries\SS_Projects\_Release\$(TargetName).dll /s</Command>
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </CustomBuildStep>
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="CudaControl.idl" />
