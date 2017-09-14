@@ -248,7 +248,7 @@
     </Link>
     <PostBuildEvent>
       <Command>tlbimp.exe /machine:x64 $(TargetDir)\$(TargetName).dll /keyfile:$(ProjectDir)$(TargetName).pfx /out:$(TargetDir)\$(TargetName)Lib.dll
-regsvr32 C:\data\Binaries\SS_Projects\_Release\$(TargetName).dll /s</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
