@@ -45,6 +45,7 @@ build/
 [Bb]uild[Ll]og.*
 
 *_i.c
+*_i.h
 *_p.c
 *.ilk
 *.meta
