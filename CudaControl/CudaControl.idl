@@ -20,6 +20,8 @@ interface ICudaKernel : IDispatch{
 	[id(2), helpstring("method RunFloat")] HRESULT RunFloat([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(float) rgInput, [out,retval] SAFEARRAY(float)* prgOutput);
 	[id(3), helpstring("method RunDouble")] HRESULT RunDouble([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [out,retval] SAFEARRAY(double)* prgOutput);
 	[id(4), helpstring("method QueryString")] HRESULT QueryString([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BSTR)* prgOutput);
+	[id(5), helpstring("method RunFloatEx")] HRESULT RunFloatEx([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(float) rgInput, [in] BSTR bstrInput, [out, retval] SAFEARRAY(float)* prgOutput);
+	[id(6), helpstring("method RunDoubleEx")] HRESULT RunDoubleEx([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [in] BSTR bstrInput, [out, retval] SAFEARRAY(double)* prgOutput);
 };
 [
 	uuid(DAAB1D4F-6487-47E7-806F-C0FC70A942EC),
