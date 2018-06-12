@@ -27,6 +27,7 @@ void CCudaKernel::FinalRelease()
 
 	if (m_hCudaDLL != NULL)
 	{
+		Sleep(0);
 		FreeLibrary(m_hCudaDLL);
 		m_hCudaDLL = NULL;
 	}
@@ -848,7 +849,7 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 
 		if (pstrOutput != NULL)
 		{
-			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, (LONG*)pstrOutput, NULL, NULL, szErr, MAX_ERROR);
+			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, NULL, NULL, &pstrOutput, szErr, MAX_ERROR);
 			pstrOutput = NULL;
 		}
 	}
@@ -868,7 +869,7 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 
 		if (pstrOutput != NULL)
 		{
-			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, (LONG*)pstrOutput, NULL, NULL, szErr, MAX_ERROR);
+			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, NULL, NULL, &pstrOutput, szErr, MAX_ERROR);
 			pstrOutput = NULL;
 		}
 
@@ -890,7 +891,7 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 
 		if (pstrOutput != NULL)
 		{
-			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, (LONG*)pstrOutput, NULL, NULL, szErr, MAX_ERROR);
+			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, NULL, NULL, &pstrOutput, szErr, MAX_ERROR);
 			pstrOutput = NULL;
 		}
 
