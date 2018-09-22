@@ -189,7 +189,7 @@ STDMETHODIMP CCudaKernel::RunFloat(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY
 	//	Release the input data.
 	//---------------------------------------
 
-	if (rgInput != NULL)
+	if (pfInput != NULL && rgInput != NULL)
 	{
 		SafeArrayUnaccessData(rgInput);
 		pfInput = NULL;
@@ -226,46 +226,46 @@ STDMETHODIMP CCudaKernel::RunFloat(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY
 		pfOutput = NULL;
 	}
 	}
-		CATCH(COleDispatchException, e)
+	CATCH(COleDispatchException, e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeFloat)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
 	}
 	CATCH_ALL(e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeFloat)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
@@ -353,7 +353,7 @@ STDMETHODIMP CCudaKernel::RunFloatEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARR
 		//	Release the input data.
 		//---------------------------------------
 
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
@@ -392,44 +392,44 @@ STDMETHODIMP CCudaKernel::RunFloatEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARR
 	}
 	CATCH(COleDispatchException, e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeFloat)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
 	}
 	CATCH_ALL(e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeFloat)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
@@ -505,7 +505,7 @@ STDMETHODIMP CCudaKernel::RunDouble(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRA
 		//	Release the input data.
 		//---------------------------------------
 
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
@@ -544,44 +544,44 @@ STDMETHODIMP CCudaKernel::RunDouble(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRA
 	}
 	CATCH(COleDispatchException, e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeDouble)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
 	}
 	CATCH_ALL(e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeDouble)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
@@ -671,7 +671,7 @@ STDMETHODIMP CCudaKernel::RunDoubleEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 	//	Release the input data.
 	//---------------------------------------
 
-	if (rgInput != NULL)
+	if (pfInput != NULL && rgInput != NULL)
 	{
 		SafeArrayUnaccessData(rgInput);
 		pfInput = NULL;
@@ -710,44 +710,44 @@ STDMETHODIMP CCudaKernel::RunDoubleEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 	}
 		CATCH(COleDispatchException, e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeDouble)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
 	}
 	CATCH_ALL(e)
 	{
-		if (rgInput != NULL)
+		if (pfInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			pfInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pfOutput != NULL && pfOutput != rgOutput1)
 		{
 			(*m_pfnInvokeDouble)(lKernelIdx, CUDA_DLL_FREEMEM, pfOutput, 0, NULL, NULL, szErr, MAX_ERROR);
 			pfOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
@@ -819,7 +819,7 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 		//	Release the input data.
 		//---------------------------------------
 
-		if (rgInput != NULL)
+		if (plInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			plInput = NULL;
@@ -855,44 +855,44 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 	}
 	CATCH(COleDispatchException, e)
 	{
-		if (rgInput != NULL)
+		if (plInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			plInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pstrOutput != NULL)
 		{
 			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, NULL, NULL, &pstrOutput, szErr, MAX_ERROR);
 			pstrOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
 	}
 	CATCH_ALL(e)
 	{
-		if (rgInput != NULL)
+		if (plInput != NULL && rgInput != NULL)
 		{
 			SafeArrayUnaccessData(rgInput);
 			plInput = NULL;
-		}
-
-		if (rgOutput != NULL)
-		{
-			SafeArrayDestroy(rgOutput);
-			rgOutput = NULL;
 		}
 
 		if (pstrOutput != NULL)
 		{
 			(*m_pfnQueryString)(lKernelIdx, CUDA_DLL_FREEMEM, NULL, NULL, &pstrOutput, szErr, MAX_ERROR);
 			pstrOutput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
 		}
 
 		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
