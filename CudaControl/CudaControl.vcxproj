@@ -248,7 +248,7 @@
       <AdditionalDependencies>comsuppw.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>tlbimp.exe /machine:x64 $(TargetDir)\$(TargetName).dll /keyfile:$(ProjectDir)$(TargetName).pfx /out:$(TargetDir)\$(TargetName)Lib.dll
+      <Command>tlbimp.exe /machine:Agnostic $(TargetDir)\$(TargetName).dll /keyfile:$(ProjectDir)$(TargetName).pfx /out:$(TargetDir)\$(TargetName)Lib.dll
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
