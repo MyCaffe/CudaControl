@@ -34,6 +34,8 @@ void CCudaKernel::FinalRelease()
 
 	m_pfnInvokeFloat = NULL;
 	m_pfnInvokeDouble = NULL;
+	m_pfnInvokeFloatEx = NULL;
+	m_pfnInvokeDoubleEx = NULL;
 	m_pfnQueryString = NULL;
 }
 
