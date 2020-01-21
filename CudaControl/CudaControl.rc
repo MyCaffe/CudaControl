@@ -57,8 +57,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,10,2,38
- PRODUCTVERSION 0,10,2,38
+ FILEVERSION 0,10,2,124
+ PRODUCTVERSION 0,10,2,124
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -73,14 +73,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "SignalPOP LLC"
+            VALUE "CompanyName", "SignalPop LLC"
             VALUE "FileDescription", "CUDA Control used by .net applications to communicate with CUDA."
-            VALUE "FileVersion", "0.10.2.38"
+            VALUE "FileVersion", "0.10.2.124"
             VALUE "InternalName", "CudaControl.dll"
-            VALUE "LegalCopyright", "Copyright (C) SignalPOP 2016-2017"
+            VALUE "LegalCopyright", "Copyright (C) 2016-2020 SignalPop LLC. All rights reserved."
             VALUE "OriginalFilename", "CudaControl.dll"
             VALUE "ProductName", "MyCaffe"
-            VALUE "ProductVersion", "0.10.2.38"
+            VALUE "ProductVersion", "0.10.2.124"
         END
     END
     BLOCK "VarFileInfo"
