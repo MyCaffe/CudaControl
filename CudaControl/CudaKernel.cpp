@@ -332,10 +332,12 @@ STDMETHODIMP CCudaKernel::RunFloatEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARR
 		//---------------------------------------
 
 		LPTSTR pszInput = NULL;
+		_bstr_t* pbstr = NULL;
+
 		if (bstrInput != NULL)
 		{
-			_bstr_t strInput(bstrInput);
-			pszInput = strInput;
+			pbstr = new _bstr_t(bstrInput);
+			pszInput = *pbstr;
 		}
 
 		//---------------------------------------
@@ -348,6 +350,10 @@ STDMETHODIMP CCudaKernel::RunFloatEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARR
 
 		szErr[MAX_ERROR] = (TCHAR)NULL;
 		lErr = (*m_pfnInvokeFloatEx)(lKernelIdx, lFunctionIdx, pfInput, lInput, pszInput, &pfOutput, &lOutput, szErr, MAX_ERROR);
+
+		if (pbstr != NULL)
+			free(pbstr);
+
 		if (lErr != 0)
 			AfxThrowOleDispatchException((WORD)lErr, szErr);
 
@@ -649,12 +655,13 @@ STDMETHODIMP CCudaKernel::RunDoubleEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 	//---------------------------------------
 
 	LPTSTR pszInput = NULL;
+	_bstr_t* pbstr = NULL;
+
 	if (bstrInput != NULL)
 	{
-		_bstr_t strInput(bstrInput);
-		pszInput = strInput;
+		pbstr = new _bstr_t(bstrInput);
+		pszInput = *pbstr;
 	}
-
 
 	//---------------------------------------
 	//	Call the kernel DLL.
@@ -666,6 +673,10 @@ STDMETHODIMP CCudaKernel::RunDoubleEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 
 	szErr[MAX_ERROR] = (TCHAR)NULL;
 	lErr = (*m_pfnInvokeDoubleEx)(lKernelIdx, lFunctionIdx, pfInput, lInput, pszInput, &pfOutput, &lOutput, szErr, MAX_ERROR);
+
+	if (pbstr != NULL)
+		free(pbstr);
+
 	if (lErr != 0)
 		AfxThrowOleDispatchException((WORD)lErr, szErr);
 
