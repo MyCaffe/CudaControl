@@ -23,6 +23,8 @@ const LONG CUDA_DLL_CLEANUP = -3;
 #define SZDLL_QUERYSTRING "DLL_QueryString"
 #define SZDLL_INVOKEFLOATEX "DLL_InvokeFloatEx"
 #define SZDLL_INVOKEDOUBLEEX "DLL_InvokeDoubleEx"
+#define SZDLL_INVOKEFLOATEX2 "DLL_InvokeFloatEx2"
+#define SZDLL_INVOKEDOUBLEEX2 "DLL_InvokeDoubleEx2"
 
 typedef LONG (WINAPI *LPFNDLLINVOKEFLOAT)(LONG lKernelIdx,
 	                                      LONG lFunctionIdx,
@@ -51,6 +53,18 @@ typedef LONG(WINAPI *LPFNDLLINVOKEDOUBLEEX)(LONG lKernelIdx,
 									 LPTSTR pszInput,
 									 double** ppOutput, LONG* plOutput,
 									 LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLINVOKEFLOATEX2)(LONG lKernelIdx,
+									        LONG lFunctionIdx,
+								     float* pInput, LONG lInput,
+	                                 LONGLONG* plInput, LONG llInput,				
+									 float** ppOutput, LONG* plOutput,
+									 LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLINVOKEDOUBLEEX2)(LONG lKernelIdx,
+									         LONG lFunctionIdx,
+									 double* pInput, LONG lInput,
+									 LONGLONG* plInput, LONG llInput,
+									 double** ppOutput, LONG* plOutput,
+									 LPTSTR szErr, LONG lszErrMax);
 
 // CCudaKernel
 
@@ -71,6 +85,8 @@ public:
 		m_pfnQueryString = NULL;
 		m_pfnInvokeFloatEx = NULL;
 		m_pfnInvokeDoubleEx = NULL;
+		m_pfnInvokeFloatEx2 = NULL;
+		m_pfnInvokeDoubleEx2 = NULL;
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_CUDAKERNEL)
@@ -102,6 +118,8 @@ END_CONNECTION_POINT_MAP()
 	LPFNDLLQUERYSTRING m_pfnQueryString;
 	LPFNDLLINVOKEFLOATEX m_pfnInvokeFloatEx;
 	LPFNDLLINVOKEDOUBLEEX m_pfnInvokeDoubleEx;
+	LPFNDLLINVOKEFLOATEX2 m_pfnInvokeFloatEx2;
+	LPFNDLLINVOKEDOUBLEEX2 m_pfnInvokeDoubleEx2;
 
 public:
 
@@ -110,6 +128,8 @@ public:
 	STDMETHOD(RunDouble)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, SAFEARRAY ** prgOutput);
 	STDMETHOD(RunFloatEx)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, BSTR bstrInput, SAFEARRAY ** prgOutput);
 	STDMETHOD(RunDoubleEx)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, BSTR bstrInput, SAFEARRAY ** prgOutput);
+	STDMETHOD(RunFloatEx2)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rglInput, SAFEARRAY** prgOutput);
+	STDMETHOD(RunDoubleEx2)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rglInput, SAFEARRAY** prgOutput);
 	STDMETHOD(QueryString)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, SAFEARRAY ** prgOutput);
 };
 
