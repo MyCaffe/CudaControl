@@ -151,6 +151,19 @@ EXTERN_C const IID IID_ICudaKernel;
             /* [in] */ SAFEARRAY * rgInput2,
             /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE QueryBytes( 
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0001,
+            /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SetBytes( 
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0002,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0003,
+            /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
+        
     };
     
     
@@ -281,6 +294,23 @@ EXTERN_C const IID IID_ICudaKernel;
             /* [in] */ SAFEARRAY * rgInput2,
             /* [retval][out] */ SAFEARRAY * *prgOutput);
         
+        DECLSPEC_XFGVIRT(ICudaKernel, QueryBytes)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *QueryBytes )( 
+            ICudaKernel * This,
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0001,
+            /* [retval][out] */ SAFEARRAY * *prgOutput);
+        
+        DECLSPEC_XFGVIRT(ICudaKernel, SetBytes)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SetBytes )( 
+            ICudaKernel * This,
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0002,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0003,
+            /* [retval][out] */ SAFEARRAY * *prgOutput);
+        
         END_INTERFACE
     } ICudaKernelVtbl;
 
@@ -340,6 +370,12 @@ EXTERN_C const IID IID_ICudaKernel;
 
 #define ICudaKernel_RunDoubleEx2(This,lKernelIdx,lFunctionIdx,rgInput,rgInput2,prgOutput)	\
     ( (This)->lpVtbl -> RunDoubleEx2(This,lKernelIdx,lFunctionIdx,rgInput,rgInput2,prgOutput) ) 
+
+#define ICudaKernel_QueryBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0001,prgOutput)	\
+    ( (This)->lpVtbl -> QueryBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0001,prgOutput) ) 
+
+#define ICudaKernel_SetBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0002,__MIDL__ICudaKernel0003,prgOutput)	\
+    ( (This)->lpVtbl -> SetBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0002,__MIDL__ICudaKernel0003,prgOutput) ) 
 
 #endif /* COBJMACROS */
 

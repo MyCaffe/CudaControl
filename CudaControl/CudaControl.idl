@@ -24,6 +24,8 @@ interface ICudaKernel : IDispatch{
 	[id(6), helpstring("method RunDoubleEx")] HRESULT RunDoubleEx([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [in] BSTR bstrInput, [out, retval] SAFEARRAY(double)* prgOutput);
 	[id(7), helpstring("method RunFloatEx2")] HRESULT RunFloatEx2([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(float) rgInput, [in] SAFEARRAY(LONGLONG) rgInput2, [out, retval] SAFEARRAY(float)* prgOutput);
 	[id(8), helpstring("method RunDoubleEx2")] HRESULT RunDoubleEx2([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [in] SAFEARRAY(LONGLONG) rgInput2, [out, retval] SAFEARRAY(double)* prgOutput);
+	[id(9), helpstring("method QueryBytes")] HRESULT QueryBytes([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BYTE)* prgOutput);
+	[id(10), helpstring("method SetBytes")] HRESULT SetBytes([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [in] SAFEARRAY(BYTE), [out, retval] SAFEARRAY(LONG)* prgOutput);
 };
 [
 	uuid(DAAB1D4F-6487-47E7-806F-C0FC70A942EC),

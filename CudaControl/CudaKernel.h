@@ -21,6 +21,8 @@ const LONG CUDA_DLL_CLEANUP = -3;
 #define SZDLL_INVOKEFLOAT "DLL_InvokeFloat"
 #define SZDLL_INVOKEDOUBLE "DLL_InvokeDouble"
 #define SZDLL_QUERYSTRING "DLL_QueryString"
+#define SZDLL_QUERYBYTES "DLL_QueryBytes"
+#define SZDLL_SETBYTES "DLL_SetBytes"
 #define SZDLL_INVOKEFLOATEX "DLL_InvokeFloatEx"
 #define SZDLL_INVOKEDOUBLEEX "DLL_InvokeDoubleEx"
 #define SZDLL_INVOKEFLOATEX2 "DLL_InvokeFloatEx2"
@@ -37,9 +39,22 @@ typedef LONG (WINAPI *LPFNDLLINVOKEDOUBLE)(LONG lKernelIdx,
 									 double** ppOutput, LONG* plOutput,
 									 LPTSTR szErr, LONG lszErrMax);
 typedef LONG (WINAPI *LPFNDLLQUERYSTRING)(LONG lKernelIdx,
-	                                       LONG lFunctionIdx,
+										   LONG lFunctionIdx,
 								     LONG* pInput, LONG lInput,
 									 LPTSTR* ppOutput,
+									 LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLQUERYBYTES)(LONG lKernelIdx,
+									       LONG lFunctionIdx,
+									 LONG* pInput, LONG lInput,
+									 BYTE** ppOutput,
+								     LONG* plOutput,		
+									 LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLSETBYTES)(LONG lKernelIdx,
+									       LONG lFunctionIdx,
+									 LONG* pInput, LONG lInput,
+									 BYTE* pbInput, LONG lbInput,
+									 LONG** ppOutput,
+									 LONG* plOutput,
 									 LPTSTR szErr, LONG lszErrMax);
 typedef LONG(WINAPI *LPFNDLLINVOKEFLOATEX)(LONG lKernelIdx,
 										   LONG lFunctionIdx,
@@ -83,6 +98,8 @@ public:
 		m_pfnInvokeFloat = NULL;
 		m_pfnInvokeDouble = NULL;
 		m_pfnQueryString = NULL;
+		m_pfnSetBytes = NULL;
+		m_pfnQueryBytes = NULL;
 		m_pfnInvokeFloatEx = NULL;
 		m_pfnInvokeDoubleEx = NULL;
 		m_pfnInvokeFloatEx2 = NULL;
@@ -116,6 +133,8 @@ END_CONNECTION_POINT_MAP()
 	LPFNDLLINVOKEFLOAT m_pfnInvokeFloat;
 	LPFNDLLINVOKEDOUBLE m_pfnInvokeDouble;
 	LPFNDLLQUERYSTRING m_pfnQueryString;
+	LPFNDLLQUERYBYTES m_pfnQueryBytes;
+	LPFNDLLSETBYTES m_pfnSetBytes;
 	LPFNDLLINVOKEFLOATEX m_pfnInvokeFloatEx;
 	LPFNDLLINVOKEDOUBLEEX m_pfnInvokeDoubleEx;
 	LPFNDLLINVOKEFLOATEX2 m_pfnInvokeFloatEx2;
@@ -131,6 +150,8 @@ public:
 	STDMETHOD(RunFloatEx2)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rglInput, SAFEARRAY** prgOutput);
 	STDMETHOD(RunDoubleEx2)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rglInput, SAFEARRAY** prgOutput);
 	STDMETHOD(QueryString)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, SAFEARRAY ** prgOutput);
+	STDMETHOD(QueryBytes)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput);
+	STDMETHOD(SetBytes)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rgbInput, SAFEARRAY** prgOutput);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(CudaKernel), CCudaKernel)
