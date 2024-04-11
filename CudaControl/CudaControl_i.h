@@ -164,6 +164,18 @@ EXTERN_C const IID IID_ICudaKernel;
             /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0003,
             /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE QueryStringFloatEx( 
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0004,
+            /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE QueryStringDoubleEx( 
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0005,
+            /* [retval][out] */ SAFEARRAY * *prgOutput) = 0;
+        
     };
     
     
@@ -311,6 +323,22 @@ EXTERN_C const IID IID_ICudaKernel;
             /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0003,
             /* [retval][out] */ SAFEARRAY * *prgOutput);
         
+        DECLSPEC_XFGVIRT(ICudaKernel, QueryStringFloatEx)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *QueryStringFloatEx )( 
+            ICudaKernel * This,
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0004,
+            /* [retval][out] */ SAFEARRAY * *prgOutput);
+        
+        DECLSPEC_XFGVIRT(ICudaKernel, QueryStringDoubleEx)
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *QueryStringDoubleEx )( 
+            ICudaKernel * This,
+            /* [in] */ LONG lKernelIdx,
+            /* [in] */ LONG lFunctionIdx,
+            /* [in] */ SAFEARRAY * __MIDL__ICudaKernel0005,
+            /* [retval][out] */ SAFEARRAY * *prgOutput);
+        
         END_INTERFACE
     } ICudaKernelVtbl;
 
@@ -376,6 +404,12 @@ EXTERN_C const IID IID_ICudaKernel;
 
 #define ICudaKernel_SetBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0002,__MIDL__ICudaKernel0003,prgOutput)	\
     ( (This)->lpVtbl -> SetBytes(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0002,__MIDL__ICudaKernel0003,prgOutput) ) 
+
+#define ICudaKernel_QueryStringFloatEx(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0004,prgOutput)	\
+    ( (This)->lpVtbl -> QueryStringFloatEx(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0004,prgOutput) ) 
+
+#define ICudaKernel_QueryStringDoubleEx(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0005,prgOutput)	\
+    ( (This)->lpVtbl -> QueryStringDoubleEx(This,lKernelIdx,lFunctionIdx,__MIDL__ICudaKernel0005,prgOutput) ) 
 
 #endif /* COBJMACROS */
 

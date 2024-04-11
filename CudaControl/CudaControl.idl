@@ -26,6 +26,8 @@ interface ICudaKernel : IDispatch{
 	[id(8), helpstring("method RunDoubleEx2")] HRESULT RunDoubleEx2([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(double) rgInput, [in] SAFEARRAY(LONGLONG) rgInput2, [out, retval] SAFEARRAY(double)* prgOutput);
 	[id(9), helpstring("method QueryBytes")] HRESULT QueryBytes([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BYTE)* prgOutput);
 	[id(10), helpstring("method SetBytes")] HRESULT SetBytes([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [in] SAFEARRAY(BYTE), [out, retval] SAFEARRAY(LONG)* prgOutput);
+	[id(11), helpstring("method QueryStringFloatEx")] HRESULT QueryStringFloatEx([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BSTR)* prgOutput);
+	[id(12), helpstring("method QueryStringDoubleEx")] HRESULT QueryStringDoubleEx([in] LONG lKernelIdx, [in] LONG lFunctionIdx, [in] SAFEARRAY(LONG), [out, retval] SAFEARRAY(BSTR)* prgOutput);
 };
 [
 	uuid(DAAB1D4F-6487-47E7-806F-C0FC70A942EC),

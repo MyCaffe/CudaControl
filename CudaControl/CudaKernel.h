@@ -13,6 +13,7 @@
 
 
 const DWORD MAX_ERROR = 1023;
+const DWORD MAX_BUFFER = 4096;
 
 const LONG CUDA_DLL_FREEMEM = -1;
 const LONG CUDA_DLL_INITIALIZE = -2;
@@ -27,6 +28,8 @@ const LONG CUDA_DLL_CLEANUP = -3;
 #define SZDLL_INVOKEDOUBLEEX "DLL_InvokeDoubleEx"
 #define SZDLL_INVOKEFLOATEX2 "DLL_InvokeFloatEx2"
 #define SZDLL_INVOKEDOUBLEEX2 "DLL_InvokeDoubleEx2"
+#define SZDLL_QUERYSTRINGFLOATEX "DLL_QueryStringFloatEx"
+#define SZDLL_QUERYSTRINGDOUBLEEX "DLL_QueryStringFloatEx"
 
 typedef LONG (WINAPI *LPFNDLLINVOKEFLOAT)(LONG lKernelIdx,
 	                                      LONG lFunctionIdx,
@@ -80,6 +83,16 @@ typedef LONG(WINAPI* LPFNDLLINVOKEDOUBLEEX2)(LONG lKernelIdx,
 									 LONGLONG* plInput, LONG llInput,
 									 double** ppOutput, LONG* plOutput,
 									 LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLQUERYSTRINGFLOATEX)(LONG lKernelIdx,
+	LONG lFunctionIdx,
+	LONG* pInput, LONG lInput,
+	LPTSTR pszOutput, LONG lOutputMax,
+	LPTSTR szErr, LONG lszErrMax);
+typedef LONG(WINAPI* LPFNDLLQUERYSTRINGDOUBLEEX)(LONG lKernelIdx,
+	LONG lFunctionIdx,
+	LONG* pInput, LONG lInput,
+	LPTSTR pszOutput, LONG lOutputMax,
+	LPTSTR szErr, LONG lszErrMax);
 
 // CCudaKernel
 
@@ -104,6 +117,8 @@ public:
 		m_pfnInvokeDoubleEx = NULL;
 		m_pfnInvokeFloatEx2 = NULL;
 		m_pfnInvokeDoubleEx2 = NULL;
+		m_pfnQueryStringFloatEx = NULL;
+		m_pfnQueryStringDoubleEx = NULL;
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_CUDAKERNEL)
@@ -139,6 +154,8 @@ END_CONNECTION_POINT_MAP()
 	LPFNDLLINVOKEDOUBLEEX m_pfnInvokeDoubleEx;
 	LPFNDLLINVOKEFLOATEX2 m_pfnInvokeFloatEx2;
 	LPFNDLLINVOKEDOUBLEEX2 m_pfnInvokeDoubleEx2;
+	LPFNDLLQUERYSTRINGFLOATEX m_pfnQueryStringFloatEx;
+	LPFNDLLQUERYSTRINGDOUBLEEX m_pfnQueryStringDoubleEx;
 
 public:
 
@@ -152,6 +169,8 @@ public:
 	STDMETHOD(QueryString)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY * rgInput, SAFEARRAY ** prgOutput);
 	STDMETHOD(QueryBytes)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput);
 	STDMETHOD(SetBytes)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rgbInput, SAFEARRAY** prgOutput);
+	STDMETHOD(QueryStringFloatEx)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput);
+	STDMETHOD(QueryStringDoubleEx)(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(CudaKernel), CCudaKernel)

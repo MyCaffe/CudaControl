@@ -37,6 +37,10 @@ void CCudaKernel::FinalRelease()
 	m_pfnInvokeFloatEx = NULL;
 	m_pfnInvokeDoubleEx = NULL;
 	m_pfnQueryString = NULL;
+	m_pfnQueryBytes = NULL;
+	m_pfnSetBytes = NULL;
+	m_pfnQueryStringFloatEx = NULL;
+	m_pfnQueryStringDoubleEx = NULL;	
 }
 
 
@@ -102,6 +106,9 @@ STDMETHODIMP CCudaKernel::Load(BSTR bstrKernelDLLName)
 
 		m_pfnQueryBytes = (LPFNDLLQUERYBYTES)GetProcAddress(m_hCudaDLL, SZDLL_QUERYBYTES);
 		m_pfnSetBytes = (LPFNDLLSETBYTES)GetProcAddress(m_hCudaDLL, SZDLL_SETBYTES);
+
+		m_pfnQueryStringFloatEx = (LPFNDLLQUERYSTRINGFLOATEX)GetProcAddress(m_hCudaDLL, SZDLL_QUERYSTRINGFLOATEX);
+		m_pfnQueryStringDoubleEx = (LPFNDLLQUERYSTRINGDOUBLEEX)GetProcAddress(m_hCudaDLL, SZDLL_QUERYSTRINGDOUBLEEX);
 	}
 	CATCH_ALL(e)
 	{
@@ -1294,6 +1301,266 @@ STDMETHODIMP CCudaKernel::QueryString(LONG lKernelIdx, LONG lFunctionIdx, SAFEAR
 
 	return S_OK;
 }
+
+STDMETHODIMP CCudaKernel::QueryStringFloatEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	HRESULT hr;
+	LONG* plInput = NULL;
+	LONG lInput = 0;
+	LPTSTR pstrOutput = NULL;
+	LONG lOutput = 1;
+	LONG lLBound = 0;
+	LONG lUBound = 0;
+	LONG lErr = 0;
+	TCHAR szErr[MAX_ERROR + 1];
+	TCHAR szOutput[MAX_BUFFER + 1];
+	SAFEARRAY* rgOutput = NULL;
+
+	TRY
+	{
+		memset(szErr, 0, sizeof(TCHAR) * (MAX_ERROR + 1));
+		memset(szOutput, 0, sizeof(TCHAR) * (MAX_BUFFER + 1));	
+
+		//---------------------------------------
+		//	Verify the state and parameters.
+		//---------------------------------------
+
+		if (m_pfnQueryStringFloatEx == NULL)
+			AfxThrowOleException(HRESULT_FROM_WIN32(ERROR_BAD_DLL_ENTRYPOINT));
+
+
+		//---------------------------------------
+		//	If there is input data, extract it
+		//	from the input safearray.
+		//---------------------------------------
+
+		if (rgInput != NULL)
+		{
+			hr = SafeArrayAccessData(rgInput, (LPVOID*)&plInput);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			hr = SafeArrayGetLBound(rgInput, 1, &lLBound);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			hr = SafeArrayGetUBound(rgInput, 1, &lUBound);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			lInput = lUBound - lLBound + 1;
+		}
+
+		//---------------------------------------
+		//	Call the kernel DLL.
+		//---------------------------------------
+
+		szErr[MAX_ERROR] = (TCHAR)NULL;
+		szOutput[MAX_BUFFER] = (TCHAR)NULL;
+		lErr = (*m_pfnQueryStringFloatEx)(lKernelIdx, lFunctionIdx, plInput, lInput, szOutput, MAX_BUFFER, szErr, MAX_ERROR);
+		if (lErr != 0)
+			AfxThrowOleDispatchException((WORD)lErr, szErr);
+
+		//---------------------------------------
+		//	Release the input data.
+		//---------------------------------------
+
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		//---------------------------------------
+		//	Convert the output data into a new
+		//	safearray.
+		//---------------------------------------
+
+		rgOutput = SafeArrayCreateVector(VT_BSTR, 0, 1);
+
+		if (rgOutput == NULL)
+			AfxThrowMemoryException();
+
+		szOutput[MAX_BUFFER] = (TCHAR)NULL;
+		BSTR bstr = SysAllocString(szOutput);
+		LONG lIdx = 0;
+
+		hr = SafeArrayPutElement(rgOutput, &lIdx, bstr);
+		SysFreeString(bstr);
+
+		if (FAILED(hr))
+			AfxThrowOleException(hr);
+
+		*prgOutput = rgOutput;
+		rgOutput = NULL;
+	}
+	CATCH(COleDispatchException, e)
+	{
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
+		}
+
+		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
+	}
+	CATCH_ALL(e)
+	{
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
+		}
+
+		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
+	}
+	END_CATCH_ALL
+
+	return S_OK;
+}
+
+STDMETHODIMP CCudaKernel::QueryStringDoubleEx(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY** prgOutput)
+{
+	AFX_MANAGE_STATE(AfxGetStaticModuleState());
+	HRESULT hr;
+	LONG* plInput = NULL;
+	LONG lInput = 0;
+	LPTSTR pstrOutput = NULL;
+	LONG lOutput = 1;
+	LONG lLBound = 0;
+	LONG lUBound = 0;
+	LONG lErr = 0;
+	TCHAR szErr[MAX_ERROR + 1];
+	TCHAR szOutput[MAX_BUFFER + 1];
+	SAFEARRAY* rgOutput = NULL;
+
+	TRY
+	{
+		memset(szErr, 0, sizeof(TCHAR) * (MAX_ERROR + 1));
+		memset(szOutput, 0, sizeof(TCHAR) * (MAX_BUFFER + 1));
+
+		//---------------------------------------
+		//	Verify the state and parameters.
+		//---------------------------------------
+
+		if (m_pfnQueryStringDoubleEx == NULL)
+			AfxThrowOleException(HRESULT_FROM_WIN32(ERROR_BAD_DLL_ENTRYPOINT));
+
+
+		//---------------------------------------
+		//	If there is input data, extract it
+		//	from the input safearray.
+		//---------------------------------------
+
+		if (rgInput != NULL)
+		{
+			hr = SafeArrayAccessData(rgInput, (LPVOID*)&plInput);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			hr = SafeArrayGetLBound(rgInput, 1, &lLBound);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			hr = SafeArrayGetUBound(rgInput, 1, &lUBound);
+			if (FAILED(hr))
+				AfxThrowOleException(hr);
+
+			lInput = lUBound - lLBound + 1;
+		}
+
+		//---------------------------------------
+		//	Call the kernel DLL.
+		//---------------------------------------
+
+		szErr[MAX_ERROR] = (TCHAR)NULL;
+		szOutput[MAX_BUFFER] = (TCHAR)NULL;
+		lErr = (*m_pfnQueryStringDoubleEx)(lKernelIdx, lFunctionIdx, plInput, lInput, szOutput, MAX_BUFFER, szErr, MAX_ERROR);
+		if (lErr != 0)
+			AfxThrowOleDispatchException((WORD)lErr, szErr);
+
+		//---------------------------------------
+		//	Release the input data.
+		//---------------------------------------
+
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		//---------------------------------------
+		//	Convert the output data into a new
+		//	safearray.
+		//---------------------------------------
+
+		rgOutput = SafeArrayCreateVector(VT_BSTR, 0, 1);
+		if (rgOutput == NULL)
+			AfxThrowMemoryException();
+
+		szOutput[MAX_BUFFER] = (TCHAR)NULL;
+		BSTR bstr = SysAllocString(szOutput);
+		LONG lIdx = 0;
+
+		hr = SafeArrayPutElement(rgOutput, &lIdx, bstr);
+		SysFreeString(bstr);
+
+		if (FAILED(hr))
+			AfxThrowOleException(hr);
+
+		*prgOutput = rgOutput;
+		rgOutput = NULL;
+	}
+	CATCH(COleDispatchException, e)
+	{
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
+		}
+
+		return Error(e->m_strDescription, IID_ICudaKernel, e->m_scError);
+	}
+	CATCH_ALL(e)
+	{
+		if (plInput != NULL && rgInput != NULL)
+		{
+			SafeArrayUnaccessData(rgInput);
+			plInput = NULL;
+		}
+
+		if (rgOutput != NULL)
+		{
+			SafeArrayDestroy(rgOutput);
+			rgOutput = NULL;
+		}
+
+		return Error("Running CUDA Kernel Function", IID_ICudaKernel, COleException::Process(e));
+	}
+	END_CATCH_ALL
+
+		return S_OK;
+}
+
 
 STDMETHODIMP CCudaKernel::SetBytes(LONG lKernelIdx, LONG lFunctionIdx, SAFEARRAY* rgInput, SAFEARRAY* rgbInput, SAFEARRAY** prgOutput)
 {
