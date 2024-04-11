@@ -29,7 +29,7 @@ const LONG CUDA_DLL_CLEANUP = -3;
 #define SZDLL_INVOKEFLOATEX2 "DLL_InvokeFloatEx2"
 #define SZDLL_INVOKEDOUBLEEX2 "DLL_InvokeDoubleEx2"
 #define SZDLL_QUERYSTRINGFLOATEX "DLL_QueryStringFloatEx"
-#define SZDLL_QUERYSTRINGDOUBLEEX "DLL_QueryStringFloatEx"
+#define SZDLL_QUERYSTRINGDOUBLEEX "DLL_QueryStringDoubleEx"
 
 typedef LONG (WINAPI *LPFNDLLINVOKEFLOAT)(LONG lKernelIdx,
 	                                      LONG lFunctionIdx,
